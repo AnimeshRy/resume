@@ -12,10 +12,10 @@ import astro from '../assets/about-astro.png'
 
 import { getAllPosts, sortMDByDate } from '@/utils'
 
-const languages = ['lorem', 'ipsum']
-const frontend = ['lorem', 'ipsum', 'lorem', 'ipsum', 'lorem', 'ipsum', 'lorem']
-const backend = ['lorem', 'ipsum', 'lorem', 'ipsum']
-const others = ['lorem', 'ipsum', 'lorem', 'ipsum', 'lorem']
+const frontend = ['React',  'NextJS', 'Javascript', 'TypeScript', 'HTML SCSS']
+const backend = ['NodeJS', 'MERN', 'FastAPI', 'Sanic', 'Django', 'NestJS', 'Python', 'Golang', 'LangChain', 'LangGraph', 'REST', 'GraphQL']
+const others = ['AWS', 'Github CI/CD', 'Elastic Search (ELK)', 'Redis', 'Kafka', 'OIDC', 'KeyCloak', 'PostgreSQL', 'MongoDB',
+'DynamoDB', 'Git', 'SQS', 'Kubernetes', 'Docker', 'ECS']
 
 const MAX_POSTS = 10
 const allPosts = await getAllPosts()
@@ -33,8 +33,8 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 			/>
 
 			<div class='flex flex-col items-center gap-y-4'>
-				<h1 class='text-3xl font-bold'>Lorem ipsum dolor</h1>
-				<a
+				<h1 class='text-3xl font-bold'>Animesh Singh</h1>
+				<!-- <a
 					href='https://github.com/srleom/astro-theme-resume.git'
 					class='flex flex-row items-center gap-x-3 rounded-3xl border border-input px-4 py-2 text-sm shadow-sm transition-all hover:shadow-md'
 				>
@@ -45,10 +45,9 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 						<span class='relative inline-flex h-2 w-2 rounded-full bg-green-400'></span>
 					</span>
 
-					<p class='font-medium'>Get free template</p>
-				</a>
+				</a> -->
 				<div class='flex flex-wrap justify-center gap-x-7 gap-y-3'>
-					<Label title='Lorem Ipsum'>
+					<Label title='Meetri'>
 						<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='h-5 w-5' slot='icon'
 							><path
 								fill='currentColor'
@@ -56,7 +55,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 							></path></svg
 						>
 					</Label>
-					<Label title='Ipsum'>
+					<Label title='Bengaluru'>
 						<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='h-5 w-5' slot='icon'
 							><path
 								fill='currentColor'
@@ -67,7 +66,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 					<Label
 						title='Connect on Linkedin'
 						as='a'
-						href='https://www.linkedin.com/in/example/'
+						href='https://www.linkedin.com/in/animeshry/'
 						target='_blank'
 					>
 						<svg
@@ -87,10 +86,9 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 
 		<Section title='About'>
 			<p class='text-muted-foreground'>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis atque quia omnis
-				consectetur, voluptas praesentium veniam blanditiis ratione asperiores accusantium laborum
-				odit commodi quis deserunt incidunt et dolor iure ut! Lorem ipsum dolor sit, amet
-				consectetur adipisicing elit. Alias quia, doloribus ut beatae perspiciatis voluptatibus.
+                Hello! I'm Animesh, a <b>Full Stack Software Engineer</b> based in India.
+                I enjoy creating things that live on the internet, whether that be websites, applications, or anything in between.
+                Currently, I'm focused on <b>B2B AI Agents for Customized Workflows</b>.
 			</p>
 		</Section>
 		{
@@ -109,66 +107,100 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 
 		<Section title='Experience'>
 			<Card
-				heading='Lorem Ipsum'
-				subheading='Sit amet consectetur'
-				date='Dec 2022 - Nov 2023'
+				heading='Senior Software Engineer'
+				subheading='Meetri InfoTech'
+				date='Dec 2021 - Present'
 				imagePath='/src/assets/about-astro.png'
-				altText='Lorem, ipsum dolor sit'
+				altText='Senior Software Engineer for Meetri'
 				imageClass='h-12 w-auto md:-left-16'
 			>
 				<ul class='ml-4 list-disc text-muted-foreground'>
 					<li>
-						Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore debitis recusandae, ut
-						molestiae laboriosam pariatur!
-
-						<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, pariatur!</li>
+                        Leading the <b>Merchant Integration Team at Tata 1MG</b>, overseeing Order Management systems for Pharmacy and
+                        Diagnostics serving <b>5M+ MAUs, with a team of 8</b>.
 					</li>
+					<li>
+                        Designed and Developed a <b>B2B payment and order update aggregator service</b> using <b>AWS SQS and Kafka</b>, processing
+                        3700 RPMwith 3ms P99 latency.
+					</li>
+                    <li>
+                        Developed a <b>Multi-Tenant Identity and Order Fulfillment services</b> for an agritech Ecommerce Partner with 100k
+                        MAUs on MERN Stack and GraphQL. <b>Handled Deployments for 14 services on AWS with self hosting ElasticSearch.</b>
+                    </li>
+                    <li>
+                        Built an <b>Inhouse API Gateway (Cerberus)</b> for Third Party Vendors features like <b>RBAC, Rate-Limiting, Caching,
+                        Gateway Event Hooks and Visualizations</b>
+                    </li>
+                    <li>
+                        Designed and built a Service Unification Platform <b>combining 14 + MERN based dashboards</b> to be served through a
+                        Single Monorepo setup using <b>Turborepo and NextJS for newer offerings.</b>
+                    </li>
+                    <li>
+                        Build a <b>permission library as over Keycloak</b> to extend permission granularity in Django and Sanic (Python).
+                    </li>
 				</ul>
 			</Card>
 			<Card
-				heading='Lorem Ipsum'
-				subheading='Sit amet consectetur'
-				date='Dec 2022 - Nov 2023'
+				heading='Software Consultant'
+				subheading='Ministry of Education (Contractor)'
+				date='Sep 2021 - Dec 2021'
 				imagePath='/src/assets/about-astro.png'
-				altText='Lorem, ipsum dolor sit'
+				altText='Software Consultant for Ministry of Education'
 				imageClass='h-12 w-auto md:-left-16'
-			/>
+			>
+            <ul class='ml-4 list-disc text-muted-foreground'>
+                <li>
+                    Designed and Launched a <b>Multi-Tenantmonolithic Innovation Management Tool</b> to be used by 30+ educational institutions from
+                    scratch using <b>Django, Next JS, Redis, OpenAI and the AWS stack</b>
+                </li>
+                <li>
+                    Developed a <b>Patentability Engine</b> in <b>NodeJS</b> with OpenAI APIs aiding ideation for platform users based on documents
+                    and data points generated across the platform fetched from <b>AWS RedShift</b>
+                </li>
+            </ul>
+            </Card>
+			<Card
+				heading='Freelance Web Developer'
+				subheading='Fiverr/Upwork'
+				date='Jan 2019 - Dec 2019'
+				imagePath='/src/assets/about-astro.png'
+				altText='Software Consultant for Ministry of Education'
+				imageClass='h-12 w-auto md:-left-16'
+			>
+            <ul class='ml-4 list-disc text-muted-foreground'>
+                <li>
+                    Designed and Developed static websites using <b>wordpress CMS for over 20+ clients</b>. Integrated various WP plugins like <b>Woocommerce, MonsterInsights and more</b>
+                </li>
+                <li>
+                    Took care of end to end operations of the client including but not limited to domain, hosting and generating other static content.
+                </li>
+            </ul>
+            </Card>
 		</Section>
 
 		<Section title='Education'>
 			<Card
-				heading='Lorem Ipsum'
-				subheading='Sit amet consectetur'
-				date='Dec 2022 - Nov 2023'
+				heading='Bachelors in Software Engineering'
+				subheading='Guru Gobind Singh Indraprastha University'
+				date='2018 - 2021'
 				imagePath='/src/assets/about-astro.png'
-				altText='Lorem, ipsum dolor sit'
+				altText='Bachelors in Software Engineering from Guru Gobind Singh Indraprastha University'
 				imageClass='h-12 w-auto md:-left-16'
 			>
 				<ul class='ml-4 list-disc text-muted-foreground'>
 					<li>
-						Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore debitis recusandae, ut
-						molestiae laboriosam pariatur!
-
-						<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, pariatur!</li>
+						GPA: 8.77
 					</li>
 				</ul>
 			</Card>
-			<Card
-				heading='Lorem Ipsum'
-				subheading='Sit amet consectetur'
-				date='Dec 2022 - Nov 2023'
-				imagePath='/src/assets/about-astro.png'
-				altText='Lorem, ipsum dolor sit'
-				imageClass='h-12 w-auto md:-left-16'
-			/>
 		</Section>
 
 		<Section title='Projects'>
 			<div class='flex flex-col gap-y-3 sm:flex-row sm:gap-x-3 sm:gap-y-0'>
 				<ProjectCard
-					href='https://www.google.com'
-					heading='Consectetur'
-					subheading='Lorem ipsum dolor sit amet consectetur adipisicing elit.'
+					href='http://onedoc.1mg.com/'
+					heading='OneDoc'
+					subheading="A SaaS tool for API and documentation management, streamlining workflows for TATA 1MG's development and product teams running organization wide for 500+ Users."
 					imagePath='/src/assets/coming-soon.png'
 					altText='Example'
 					class='w-full sm:w-1/2'
@@ -208,7 +240,6 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 		</Section>
 
 		<Section title='Skills'>
-			<SkillLayout title='Languages' skills={languages} />
 			<SkillLayout title='Frontend' skills={frontend} />
 			<SkillLayout title='Backend' skills={backend} />
 			<SkillLayout title='Others' skills={others} />
@@ -225,6 +256,5 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 			<span class='relative inline-flex h-2 w-2 rounded-full bg-green-400'></span>
 		</span>
 
-		<p class='font-medium'>Get free template</p>
 	</a>
 </PageLayout>
