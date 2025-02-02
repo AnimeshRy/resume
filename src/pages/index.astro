@@ -8,7 +8,7 @@ import SkillLayout from '../components/SkillLayout.astro'
 import PostPreview from '@/components/blog/PostPreview.astro'
 
 import { Image } from 'astro:assets'
-import astro from '../assets/about-astro.png'
+import astro from '../assets/about-astro.jpeg'
 
 import { getAllPosts, sortMDByDate } from '@/utils'
 
@@ -64,7 +64,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 						>
 					</Label>
 					<Label
-						title='Connect on Linkedin'
+						title='Linkedin'
 						as='a'
 						href='https://www.linkedin.com/in/animeshry/'
 						target='_blank'
@@ -110,7 +110,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 				heading='Senior Software Engineer'
 				subheading='Meetri InfoTech'
 				date='Dec 2021 - Present'
-				imagePath='/src/assets/about-astro.png'
+				imagePath='/src/assets/about-astro1.png'
 				altText='Senior Software Engineer for Meetri'
 				imageClass='h-12 w-auto md:-left-16'
 			>
@@ -131,20 +131,13 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
                         Built an <b>Inhouse API Gateway (Cerberus)</b> for Third Party Vendors features like <b>RBAC, Rate-Limiting, Caching,
                         Gateway Event Hooks and Visualizations</b>
                     </li>
-                    <li>
-                        Designed and built a Service Unification Platform <b>combining 14 + MERN based dashboards</b> to be served through a
-                        Single Monorepo setup using <b>Turborepo and NextJS for newer offerings.</b>
-                    </li>
-                    <li>
-                        Build a <b>permission library as over Keycloak</b> to extend permission granularity in Django and Sanic (Python).
-                    </li>
 				</ul>
 			</Card>
 			<Card
 				heading='Software Consultant'
 				subheading='Ministry of Education (Contractor)'
 				date='Sep 2021 - Dec 2021'
-				imagePath='/src/assets/about-astro.png'
+				imagePath='/src/assets/about-astro1.png'
 				altText='Software Consultant for Ministry of Education'
 				imageClass='h-12 w-auto md:-left-16'
 			>
@@ -163,7 +156,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 				heading='Freelance Web Developer'
 				subheading='Fiverr/Upwork'
 				date='Jan 2019 - Dec 2019'
-				imagePath='/src/assets/about-astro.png'
+				imagePath='/src/assets/about-astro1.png'
 				altText='Software Consultant for Ministry of Education'
 				imageClass='h-12 w-auto md:-left-16'
 			>
@@ -183,7 +176,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 				heading='Bachelors in Software Engineering'
 				subheading='Guru Gobind Singh Indraprastha University'
 				date='2018 - 2021'
-				imagePath='/src/assets/about-astro.png'
+				imagePath='/src/assets/about-astro1.png'
 				altText='Bachelors in Software Engineering from Guru Gobind Singh Indraprastha University'
 				imageClass='h-12 w-auto md:-left-16'
 			>
@@ -201,15 +194,15 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 					href='http://onedoc.1mg.com/'
 					heading='OneDoc'
 					subheading="A SaaS tool for API and documentation management, streamlining workflows for TATA 1MG's development and product teams running organization wide for 500+ Users."
-					imagePath='/src/assets/coming-soon.png'
+					imagePath='/src/assets/onedoc.png'
 					altText='Example'
 					class='w-full sm:w-1/2'
 				/>
 				<ProjectCard
 					as='div'
-					heading='Coming soon...'
-					subheading=''
-					imagePath='/src/assets/coming-soon.png'
+					heading='Django DB Benchmarks'
+					subheading='Django ORM Benchmarking with different Databases: PostgreSQL vs MySQL vs MariaDB vs SQLite vs CockoroachDB'
+					imagePath='/src/assets/insert.png'
 					altText='Lorem, ipsum dolor sit'
 					class='w-full sm:w-1/2'
 				/>
@@ -219,23 +212,33 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 		<Section title='Certifications'>
 			<Card
 				as='a'
-				heading='Lorem ipsum, dolor sit amet consectetur adipisicing.'
-				subheading='Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam dicta magni consequuntur corrupti.'
-				date='Mar 2024 - Mar 2024'
-				imagePath='/src/assets/about-astro.png'
+				heading='Apache Kafka Fundamentals'
+				subheading='Confluent'
+				date='Feb 2024'
+				imagePath='/src/assets/confluent_logo.jpeg'
 				altText='Lorem, ipsum dolor sit'
 				imageClass='h-11 w-auto md:-left-16'
-				href='https://www.google.com'
+				href='https://www.linkedin.com/in/animeshry/details/certifications/1709218981752/single-media-viewer/?profileId=ACoAABWSsx4By6xHgCFYF0zUQW1Yx4re-qBuPhc'
 			/>
 			<Card
 				as='a'
-				heading='Lorem ipsum, dolor sit amet'
-				subheading='Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam dicta.'
-				date='Mar 2029 - Mar 2032'
-				imagePath='/src/assets/about-astro.png'
+				heading='Full Stack Open'
+				subheading='University of Helsinki'
+				date='Oct 2021'
+				imagePath='/src/assets/helsinki.jpeg'
 				altText='Lorem, ipsum dolor sit'
 				imageClass='h-11 w-auto md:-left-16'
-				href='https://www.google.com'
+				href='https://studies.cs.helsinki.fi/stats/api/certificate/fullstackopen/en/cb9c75a1f7887fa66f6628116b5abedd'
+			/>
+			<Card
+				as='a'
+				heading='DevOps with Docker and Kubernetes'
+				subheading='University of Helsinki'
+				date='Oct 2022'
+				imagePath='/src/assets/helsinki.jpeg'
+				altText='Lorem, ipsum dolor sit'
+				imageClass='h-11 w-auto md:-left-16'
+				href='https://studies.cs.helsinki.fi/stats/api/certificate/fullstackopen/en/cb9c75a1f7887fa66f6628116b5abedd'
 			/>
 		</Section>
 
@@ -245,16 +248,4 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 			<SkillLayout title='Others' skills={others} />
 		</Section>
 	</div>
-	<a
-		href='https://github.com/srleom/astro-theme-resume.git'
-		class='mt-16 flex flex-row items-center gap-x-3 rounded-3xl border border-input px-4 py-2 text-sm shadow-sm transition-all hover:shadow-md'
-	>
-		<span class='relative flex items-center justify-center'>
-			<span
-				class='absolute inline-flex h-2 w-2 animate-ping rounded-full border border-green-400 bg-green-400 opacity-75'
-			></span>
-			<span class='relative inline-flex h-2 w-2 rounded-full bg-green-400'></span>
-		</span>
-
-	</a>
 </PageLayout>
