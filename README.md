@@ -1,79 +1,91 @@
-# Astro Resume
+# Personal Portfolio & Blog
+
+A modern, responsive portfolio and blog site built with Astro v4, showcasing my professional experience as a Full Stack Software Engineer.
+
+## Live Demo
+[Add your deployed site URL here]
 
 ## Features
 
-- Astro v4
-- TailwindCSS utility classes
-- ESLint / Prettier pre-installed and pre-configured
-- Accessible, semantic HTML markup
-- Responsive & SEO-friendly
-- Dark / Light mode, using Tailwind and CSS variables (referenced from shadcn)
-- [Astro Assets Integration](https://docs.astro.build/en/guides/assets/) for optimised images
-- MD & [MDX](https://docs.astro.build/en/guides/markdown-content/#mdx-only-features) posts
-- Pagination
-- [Automatic RSS feed](https://docs.astro.build/en/guides/rss)
-- Auto-generated [sitemap](https://docs.astro.build/en/guides/integrations-guide/sitemap/)
-- [Expressive Code](https://expressive-code.com/) source code and syntax highlighter
+- **Modern Tech Stack:**
+  - Built with Astro v4 and TailwindCSS
+  - TypeScript support
+  - ESLint / Prettier pre-configured
 
-## Credits
+- **Professional Portfolio:**
+  - Clean, responsive resume-style layout
+  - Dark / Light mode support
+  - Skills showcase with categorization (Frontend, Backend, Others)
+  - Project showcase with links
+  - Experience timeline
+  - Certifications section
 
-- [astro-theme-cactus](https://github.com/chrismwilliams/astro-theme-cactus) for blog design
-- [minirezume-framer](https://minirezume.framer.website/) for resume homepage design
+- **Integrated Blog Platform:**
+  - MD & MDX support for blog posts
+  - Optimized images via Astro Assets Integration
+  - Syntax highlighting with Expressive Code
+  - Automatic pagination
+  - RSS feed generation
+  - SEO-friendly with auto-generated sitemap
+
+## Quick Start
+
+```bash
+# Clone this repository
+git clone [your-repo-url]
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+```
 
 ## Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
 
 ```text
 ├── public/
 ├── src/
-    ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-|   ├── pages/
-|   ├── styles/
-|   ├── utils/
-|   ├── site.config.ts
-│   └── types.ts
-├── .elintrc.cjs
-├── .gitignore
-├── .prettierignore
-├── package.json
-├── prettier.config.cjs
-├── README.md
+    ├── assets/          # Images and static assets
+│   ├── components/      # Reusable UI components
+│   ├── content/        # Blog posts and content
+│   ├── layouts/        # Page layouts
+|   ├── pages/          # Route components
+|   ├── styles/         # Global styles
+|   ├── utils/          # Helper functions
+|   ├── site.config.ts  # Site configuration
+│   └── types.ts        # TypeScript types
+├── astro.config.mjs
 ├── tailwind.config.js
 └── tsconfig.json
 ```
 
-## Editing guide
+## Customization
 
-### Site info
+### Site Configuration
+Edit `src/site.config.ts` to update:
+- Site metadata (title, description)
+- Social media links
+- Navigation menu
 
-To edit site info such as site title and description, edit the `src/site.config.ts` file.
+### Content Management
+- **Portfolio Content**: Update `src/pages/index.astro` to modify your professional information
+- **Blog Posts**: Add `.md` or `.mdx` files to `src/content/`
+- **Project Cards**: Modify project components in `src/components/`
 
-### Page contents
+### Styling
+- Theme colors: Edit `src/styles/app.css`
+- Typography: Update fonts in `tailwind.config.js` and `src/styles/app.css`
+- Layout: Modify base layouts in `src/layouts/`
 
-To edit the resume homepage content and design, edit the `src/pages/index.astro` file.
+## Credits
 
-### Page components
+- Design inspired by [astro-theme-cactus](https://github.com/chrismwilliams/astro-theme-cactus) and [minirezume-framer](https://minirezume.framer.website/)
+- Built with [Astro](https://astro.build)
 
-To edit page components found site-wide such as the card used in the homepage, edit the files found in the `src/components/` directory.
+## License
 
-### Layouts
-
-To edit the base layouts of all pages, edit the `src/layouts/BaseLayout.astro` file.
-
-To edit the layout of a blog article, edit the `src/layouts/BlogPost.astro` file.
-
-### Blog content
-
-To add blog content, insert `.md` files in the `src/content/` directory.
-
-To add images in blog articles, insert a folder in the `src/content/` directory, add both the `.md` and image files into the new folder, and reference the image in your `.md` file.
-
-## Theming
-
-To change the theme colours of the site, edit the `src/styles/app.css` file.
-
-To change the fonts of the site, add your font files into `/public`, add it as a `@font-face` in the `src/styles/app.css` file, as a `fontFamily` in the `tailwind.config.js` file, and apply the new font class to the `body` tag in the `src/layouts/BaseLayout.astro` file.
+[Add your chosen license]
