@@ -70,3 +70,30 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+@layer utilities {
+	@keyframes fadeInUp {
+		from {
+			opacity: 0;
+			transform: translateY(16px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.animate-in {
+		animation: fadeInUp 0.7s ease-out forwards;
+		opacity: 0;
+		animation-fill-mode: both;
+	}
+
+	.fade-in {
+		opacity: 0;
+	}
+
+	.slide-in-from-bottom-4 {
+		animation: fadeInUp 0.7s ease-out forwards;
+	}
+}

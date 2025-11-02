@@ -1,0 +1,309 @@
+---
+import ProjectCard from './ProjectCard.astro'
+
+interface Props {
+	projects: Array<{
+		href?: string
+		as?: string
+		heading: string
+		subheading: string
+		imagePath: string
+		altText: string
+	}>
+}
+
+const { projects } = Astro.props
+const carouselId = `carousel-${Math.random().toString(36).substring(7)}`
+---
+
+<div class='projects-carousel relative' data-carousel-id={carouselId} data-carousel-init='false'>
+			<div
+				class='carousel-container relative overflow-hidden'
+				data-carousel-container
+			>
+				<div class='carousel-track flex transition-transform duration-500 ease-in-out' data-carousel-track>
+					{projects.map((project, index) => (
+						<div
+							class='carousel-slide flex-shrink-0 w-full'
+							data-slide-index={index}
+						>
+							<div class='animate-in px-2 sm:px-4' style={`animation-delay: ${index * 100}ms;`}>
+								<ProjectCard
+									href={project.href}
+									as={project.as}
+									heading={project.heading}
+									subheading={project.subheading}
+									imagePath={project.imagePath}
+									altText={project.altText}
+								/>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+
+		<!-- Navigation Buttons -->
+	{projects.length > 1 && (
+		<>
+			<button
+				class='carousel-button carousel-prev absolute left-0 top-1/2 z-10 -translate-y-1/2 -translate-x-2 sm:-translate-x-4 rounded-full border border-border bg-primary-foreground p-3 shadow-lg transition-all hover:bg-foreground/5 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed'
+				aria-label='Previous project'
+				type='button'
+			>
+				<svg
+					xmlns='http://www.w3.org/2000/svg'
+					viewBox='0 0 24 24'
+					fill='none'
+					stroke='currentColor'
+					stroke-width='2'
+					stroke-linecap='round'
+					stroke-linejoin='round'
+					class='h-5 w-5'
+				>
+					<path d='M15 18l-6-6 6-6' />
+				</svg>
+			</button>
+			<button
+				class='carousel-button carousel-next absolute right-0 top-1/2 z-10 -translate-y-1/2 translate-x-2 sm:translate-x-4 rounded-full border border-border bg-primary-foreground p-3 shadow-lg transition-all hover:bg-foreground/5 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed'
+				aria-label='Next project'
+				type='button'
+			>
+				<svg
+					xmlns='http://www.w3.org/2000/svg'
+					viewBox='0 0 24 24'
+					fill='none'
+					stroke='currentColor'
+					stroke-width='2'
+					stroke-linecap='round'
+					stroke-linejoin='round'
+					class='h-5 w-5'
+				>
+					<path d='M9 18l6-6-6-6' />
+				</svg>
+			</button>
+		</>
+	)}
+
+	<!-- Dot Indicators -->
+	{projects.length > 1 && (
+		<div class='carousel-dots mt-6 flex justify-center gap-2' data-carousel-dots></div>
+	)}
+</div>
+
+<style>
+	.projects-carousel {
+		padding: 1rem 0;
+	}
+
+	.carousel-container {
+		width: 100%;
+		margin: 0 auto;
+	}
+
+	.carousel-track {
+		width: 100%;
+		display: flex;
+	}
+
+	.carousel-slide {
+		width: 100%;
+		flex-shrink: 0;
+	}
+
+	.carousel-button {
+		cursor: pointer;
+	}
+
+	.carousel-button:disabled {
+		cursor: not-allowed;
+		opacity: 0.5;
+	}
+
+	.carousel-track {
+		cursor: grab;
+	}
+
+	.carousel-track:active {
+		cursor: grabbing;
+	}
+
+	.carousel-dot {
+		cursor: pointer;
+	}
+
+	.carousel-dot.active {
+		width: 1.5rem;
+		background-color: hsl(var(--foreground));
+	}
+
+	.carousel-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+</style>
+
+<script is:inline>
+	(function() {
+		'use strict';
+
+		function initCarousel() {
+			const carousels = document.querySelectorAll('.projects-carousel[data-carousel-init="false"]');
+			carousels.forEach(function(carousel) {
+				if (carousel.getAttribute('data-carousel-init') === 'true') return;
+				carousel.setAttribute('data-carousel-init', 'true');
+
+				const track = carousel.querySelector('[data-carousel-track]');
+				const slides = carousel.querySelectorAll('.carousel-slide');
+				const prevBtn = carousel.querySelector('.carousel-prev');
+				const nextBtn = carousel.querySelector('.carousel-next');
+
+				if (!track || !slides.length || !prevBtn || !nextBtn) {
+					carousel.setAttribute('data-carousel-init', 'false');
+					return;
+				}
+
+				let currentIndex = 0;
+				const slidesPerView = 1;
+				let maxIndex = Math.max(0, slides.length - slidesPerView);
+
+				if (currentIndex > maxIndex) {
+					currentIndex = maxIndex;
+				}
+
+				const updateDots = function() {
+					const dotsContainer = carousel.querySelector('[data-carousel-dots]');
+					if (!dotsContainer) return;
+
+					const totalDots = slides.length;
+					dotsContainer.innerHTML = '';
+
+					for (let i = 0; i < totalDots; i++) {
+						const dot = document.createElement('button');
+						dot.className = 'carousel-dot h-2 w-2 rounded-full border-0 bg-muted-foreground/30 transition-all hover:bg-muted-foreground/50';
+						dot.setAttribute('data-dot-index', i.toString());
+						dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+						dot.setAttribute('type', 'button');
+						dot.addEventListener('click', function() {
+							currentIndex = i;
+							updateCarousel();
+						});
+						dotsContainer.appendChild(dot);
+					}
+
+					const allDots = dotsContainer.querySelectorAll('.carousel-dot');
+					allDots.forEach(function(dot, index) {
+						if (index === currentIndex) {
+							dot.classList.add('active');
+						} else {
+							dot.classList.remove('active');
+						}
+					});
+				};
+
+				const updateCarousel = function() {
+					const slideWidth = 100;
+					track.style.transform = 'translateX(-' + (currentIndex * slideWidth) + '%)';
+
+					updateDots();
+
+					if (prevBtn) {
+						prevBtn.disabled = currentIndex === 0;
+						prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+					}
+					if (nextBtn) {
+						nextBtn.disabled = currentIndex >= maxIndex;
+						nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
+					}
+				};
+
+				const nextSlide = function(e) {
+					e.preventDefault();
+					e.stopPropagation();
+					if (currentIndex < maxIndex) {
+						currentIndex++;
+						updateCarousel();
+					}
+				};
+
+				const prevSlide = function(e) {
+					e.preventDefault();
+					e.stopPropagation();
+					if (currentIndex > 0) {
+						currentIndex--;
+						updateCarousel();
+					}
+				};
+
+				prevBtn.addEventListener('click', prevSlide, true);
+				nextBtn.addEventListener('click', nextSlide, true);
+
+				let startX = 0;
+				let isDragging = false;
+
+				track.addEventListener('touchstart', function(e) {
+					startX = e.touches[0].clientX;
+					isDragging = true;
+				}, { passive: true });
+
+				track.addEventListener('touchend', function(e) {
+					if (!isDragging) return;
+					isDragging = false;
+					const endX = e.changedTouches[0].clientX;
+					const diff = startX - endX;
+
+					if (Math.abs(diff) > 50) {
+						if (diff > 0) {
+							currentIndex = Math.min(currentIndex + 1, maxIndex);
+							updateCarousel();
+						} else {
+							currentIndex = Math.max(currentIndex - 1, 0);
+							updateCarousel();
+						}
+					}
+				}, { passive: true });
+
+				let mouseStartX = 0;
+				track.addEventListener('mousedown', function(e) {
+					mouseStartX = e.clientX;
+					isDragging = true;
+					track.style.cursor = 'grabbing';
+				});
+
+				document.addEventListener('mouseup', function(e) {
+					if (!isDragging) return;
+					isDragging = false;
+					track.style.cursor = 'grab';
+					const mouseEndX = e.clientX;
+					const diff = mouseStartX - mouseEndX;
+
+					if (Math.abs(diff) > 50) {
+						if (diff > 0) {
+							currentIndex = Math.min(currentIndex + 1, maxIndex);
+							updateCarousel();
+						} else {
+							currentIndex = Math.max(currentIndex - 1, 0);
+							updateCarousel();
+						}
+					}
+				});
+
+				updateCarousel();
+			});
+		}
+
+		function startInit() {
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', initCarousel);
+			} else {
+				setTimeout(initCarousel, 100);
+			}
+		}
+
+		startInit();
+
+		// Also run after a delay to catch dynamically loaded content
+		setTimeout(initCarousel, 500);
+	})();
+</script>
+
