@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+	<!-- Minimal connected nodes mark for Weaviate (brand-neutral, readable at small size). -->
+	<circle cx="12" cy="6" r="2.25" fill="currentColor" />
+	<circle cx="6" cy="16" r="2.25" fill="currentColor" />
+	<circle cx="18" cy="16" r="2.25" fill="currentColor" />
+	<path
+		d="M12 8.2L7.2 14.2M12 8.2l4.8 6M7.2 14.2h9.6"
+		stroke="currentColor"
+		stroke-width="1.5"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+	/>
+</svg>

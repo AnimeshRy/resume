@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+	<!--
+		Abstract orbit mark for Google Antigravity (no Simple Icons glyph yet).
+		Reads as lift / orbit at small sizes; uses currentColor for theme contrast.
+	-->
+	<ellipse
+		cx="12"
+		cy="12"
+		rx="9"
+		ry="4"
+		stroke="currentColor"
+		stroke-width="1.5"
+		transform="rotate(-28 12 12)"
+	/>
+	<ellipse
+		cx="12"
+		cy="12"
+		rx="9"
+		ry="4"
+		stroke="currentColor"
+		stroke-width="1.5"
+		transform="rotate(28 12 12)"
+	/>
+	<circle cx="12" cy="12" r="2.25" fill="currentColor" />
+</svg>

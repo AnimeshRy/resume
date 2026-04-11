@@ -1,0 +1,92 @@
+---
+/**
+ * Minimal animated icon for experience cards: floating code brackets
+ * with a soft pulse on the center dot. Respects prefers-reduced-motion.
+ */
+---
+
+<div class='animated-work-icon flex h-12 w-12 items-center justify-center rounded-xl border border-border bg-muted/60'>
+	<svg
+		class='h-7 w-7 text-foreground/85'
+		viewBox='0 0 24 24'
+		fill='none'
+		xmlns='http://www.w3.org/2000/svg'
+		aria-hidden='true'
+	>
+		<path
+			class='bracket bracket-left'
+			d='M8 7L5 12L8 17'
+			stroke='currentColor'
+			stroke-width='1.75'
+			stroke-linecap='round'
+			stroke-linejoin='round'
+		></path>
+		<path
+			class='bracket bracket-right'
+			d='M16 7L19 12L16 17'
+			stroke='currentColor'
+			stroke-width='1.75'
+			stroke-linecap='round'
+			stroke-linejoin='round'
+		></path>
+		<circle class='cursor-dot' cx='12' cy='12' r='1.35' fill='currentColor'></circle>
+	</svg>
+</div>
+
+<style>
+	.animated-work-icon {
+		animation: work-icon-float 3.2s ease-in-out infinite;
+	}
+
+	@keyframes work-icon-float {
+		0%,
+		100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-4px);
+		}
+	}
+
+	.bracket {
+		animation: bracket-nudge 2.4s ease-in-out infinite;
+	}
+
+	.bracket-right {
+		animation-delay: 0.12s;
+	}
+
+	@keyframes bracket-nudge {
+		0%,
+		100% {
+			opacity: 0.85;
+		}
+		50% {
+			opacity: 1;
+		}
+	}
+
+	.cursor-dot {
+		animation: cursor-pulse 1.8s ease-in-out infinite;
+	}
+
+	@keyframes cursor-pulse {
+		0%,
+		100% {
+			opacity: 0.35;
+			transform: scale(1);
+		}
+		50% {
+			opacity: 1;
+			transform: scale(1.35);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.animated-work-icon,
+		.bracket,
+		.cursor-dot {
+			animation: none;
+		}
+	}
+</style>

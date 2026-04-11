@@ -33,4 +33,22 @@ const post = defineCollection({
 		})
 })
 
-export const collections = { post }
+/** Job history: frontmatter for home + directory; markdown body = detail writeup on /work/[slug]. */
+const work = defineCollection({
+	type: 'content',
+	schema: z.object({
+		role: z.string(),
+		company: z.string(),
+		dateRange: z.string(),
+		startDate: z
+			.string()
+			.or(z.date())
+			.transform((val) => new Date(val)),
+		summaryBullets: z.array(z.string()).min(1).max(8),
+		/** Used in meta + /work directory line; falls back in pages if omitted. */
+		description: z.string().min(4).max(300).optional(),
+		draft: z.boolean().default(false)
+	})
+})
+
+export const collections = { post, work }

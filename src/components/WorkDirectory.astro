@@ -1,0 +1,177 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+import { type WorkTimelineDisplayOptions, resolveWorkTimelineOptions } from '@/config/workTimeline'
+import { cn } from '@/utils'
+
+interface Props {
+	/** Sorted work entries (newest first). */
+	items: Array<CollectionEntry<'work'>>
+	class?: string
+	/** Override defaults; safe to extend `WorkTimelineDisplayOptions` in config/workTimeline.ts */
+	options?: Partial<WorkTimelineDisplayOptions>
+}
+
+const { items, class: className, options: optionsProp } = Astro.props
+const options: WorkTimelineDisplayOptions = resolveWorkTimelineOptions(optionsProp)
+
+const chargeDuration = `${options.chargeDurationSec}s`
+const dataAttrs = {
+	'data-charge': options.chargeAnimation ? 'on' : 'off',
+	'data-motion': options.entryMotion ? 'on' : 'off'
+}
+---
+
+<div
+	class={cn(className, 'work-timeline rounded-xl border border-border py-6 pl-2 pr-3 sm:pl-4 sm:pr-5')}
+	style={`--timeline-charge-duration: ${chargeDuration};`}
+	{...dataAttrs}
+>
+	<ol class='relative m-0 list-none p-0' role='list'>
+		<!-- Continuous rail: static track + optional flowing charge (top → bottom) -->
+		<div
+			class='pointer-events-none absolute bottom-4 left-[19px] top-4 z-0 w-px bg-border sm:left-[21px]'
+			aria-hidden='true'
+		>
+		</div>
+		{
+			options.chargeAnimation && (
+				<div
+					class='work-timeline__charge-wrap pointer-events-none absolute bottom-4 left-[19px] top-4 z-[1] w-[11px] -translate-x-1/2 overflow-hidden sm:left-[21px]'
+					aria-hidden='true'
+				>
+					<div class='work-timeline__charge' />
+				</div>
+			)
+		}
+
+		{
+			items.map((item, index) => {
+				const { role, company, dateRange, description, summaryBullets } = item.data
+				const subtitle = description ?? summaryBullets[0]
+				const staggerMs = options.entryMotion ? index * 70 : 0
+				return (
+					<li
+						class={cn(
+							'relative z-[2] pb-12 pl-12 sm:pl-14',
+							'last:pb-0',
+							options.entryMotion && 'work-timeline__entry'
+						)}
+						style={options.entryMotion ? { animationDelay: `${staggerMs}ms` } : undefined}
+					>
+						{options.showNodes && (
+							<span
+								class='absolute left-[13px] top-1.5 z-[3] flex h-3.5 w-3.5 items-center justify-center rounded-full border-2 border-primary bg-background shadow-sm ring-2 ring-background sm:left-[15px]'
+								aria-hidden='true'
+							>
+								<span class='h-1.5 w-1.5 rounded-full bg-primary/80' />
+							</span>
+						)}
+						<a
+							class='group block rounded-xl outline-none ring-offset-2 ring-offset-background transition-colors focus-visible:ring-2 focus-visible:ring-ring'
+							href={`/work/${item.slug}`}
+						>
+							<div class='relative rounded-xl border border-transparent px-2 py-2 transition-all group-hover:border-border group-hover:bg-muted/40'>
+								<div class='flex flex-col gap-1'>
+									<h3 class='text-base font-semibold text-foreground'>{company}</h3>
+									<p class='text-sm text-muted-foreground'>{role}</p>
+									<p class='text-xs text-muted-foreground/90'>{dateRange}</p>
+									<p class='mt-1 text-sm leading-relaxed text-muted-foreground'>{subtitle}</p>
+									<span class='mt-2 inline-flex items-center gap-1 text-sm font-medium text-foreground/80 group-hover:underline'>
+										Read write-up
+										<svg
+											xmlns='http://www.w3.org/2000/svg'
+											width='14'
+											height='14'
+											viewBox='0 0 24 24'
+											class='translate-x-0 transition-transform group-hover:translate-x-0.5'
+											fill='currentColor'
+											aria-hidden='true'
+										>
+											<path d='M13.025 5l6 6l-6 6l-1.4-1.4l4.225-4.2H5v-2h10.85l-4.225-4.2z' />
+										</svg>
+									</span>
+								</div>
+							</div>
+						</a>
+					</li>
+				)
+			})
+		}
+	</ol>
+</div>
+
+<style>
+	/*
+	 * Flowing “charge”: bright band moves along the full rail (top → bottom, loop).
+	 * Percent-based translateY is relative to the charge element itself, not the rail — so we
+	 * animate `top` from 0 to 100% of the rail (the tall parent) and keep translateY(-100%)
+	 * so the blob enters from above and exits past the bottom.
+	 */
+	.work-timeline__charge {
+		position: absolute;
+		left: 0;
+		right: 0;
+		height: 5rem;
+		top: 0;
+		background: linear-gradient(
+			180deg,
+			transparent 0%,
+			hsl(var(--primary) / 0.15) 20%,
+			hsl(var(--primary) / 0.55) 50%,
+			hsl(var(--primary) / 0.15) 80%,
+			transparent 100%
+		);
+		filter: blur(0.5px);
+		animation: work-timeline-charge-sweep var(--timeline-charge-duration, 3.5s) linear infinite;
+		will-change: top, transform;
+	}
+
+	@keyframes work-timeline-charge-sweep {
+		0% {
+			top: 0;
+			transform: translateY(-100%);
+		}
+		100% {
+			top: 100%;
+			transform: translateY(-100%);
+		}
+	}
+
+	.work-timeline[data-charge='off'] .work-timeline__charge {
+		animation: none;
+		opacity: 0;
+	}
+
+	.work-timeline__entry {
+		animation: work-timeline-entry 0.55s ease-out both;
+		opacity: 0;
+	}
+
+	@keyframes work-timeline-entry {
+		from {
+			opacity: 0;
+			transform: translateY(10px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.work-timeline[data-motion='off'] .work-timeline__entry {
+		animation: none;
+		opacity: 1;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.work-timeline__charge {
+			animation: none;
+			opacity: 0;
+		}
+		.work-timeline__entry {
+			animation: none;
+			opacity: 1;
+		}
+	}
+</style>

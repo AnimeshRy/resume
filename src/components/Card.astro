@@ -14,9 +14,13 @@ const {
 	altText,
 	imageClass
 } = Astro.props
+
+// Named slot `icon-slot` replaces the static image when present (e.g. AnimatedWorkIcon).
+const hasIconSlot = Astro.slots.has('icon-slot')
+
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/*.{jpeg,jpg,png,gif}')
 
-if (imagePath) {
+if (imagePath && !hasIconSlot) {
 	if (!images[imagePath])
 		throw new Error(`"${imagePath}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif}"`)
 }
@@ -31,13 +35,19 @@ if (imagePath) {
 	href={href}
 >
 	{
-		imagePath && (
-			<Image
-				src={images[imagePath]()}
-				alt={altText}
-				class={cn('mb-3 md:absolute md:mb-0', imageClass)}
-				loading='eager'
-			/>
+		hasIconSlot ? (
+			<div class={cn('mb-3 md:absolute md:mb-0', imageClass)}>
+				<slot name='icon-slot' />
+			</div>
+		) : (
+			imagePath && (
+				<Image
+					src={images[imagePath]()}
+					alt={altText}
+					class={cn('mb-3 md:absolute md:mb-0', imageClass)}
+					loading='eager'
+				/>
+			)
 		)
 	}
 	<div class='flex flex-col gap-y-1.5'>

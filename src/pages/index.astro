@@ -3,14 +3,14 @@ import PageLayout from '../layouts/BaseLayout.astro'
 import Section from '../components/Section.astro'
 import Card from '../components/Card.astro'
 import ProjectsCarousel from '../components/ProjectsCarousel.astro'
+import AnimatedWorkIcon from '../components/AnimatedWorkIcon.astro'
+import AnimatedEducationIcon from '../components/AnimatedEducationIcon.astro'
 import Label from '../components/Label.astro'
 import SkillLayout from '../components/SkillLayout.astro'
 import PostPreview from '@/components/blog/PostPreview.astro'
+import ProfileAvatar from '../components/ProfileAvatar.astro'
 
-import { Image } from 'astro:assets'
-import astro from '../assets/astro.jpeg'
-
-import { getAllPosts, sortMDByDate } from '@/utils'
+import { getAllPosts, getAllWork, sortMDByDate, sortWorkByStartDate } from '@/utils'
 
 const frontend = ['React',  'NextJS', 'Javascript', 'TypeScript', 'HTML SCSS']
 const backend = ['NodeJS', 'MERN', 'FastAPI', 'Sanic', 'Django', 'NestJS', 'Python', 'Golang', 'LangChain', 'LangGraph', 'REST', 'GraphQL']
@@ -20,17 +20,13 @@ const others = ['AWS', 'Github CI/CD', 'Elastic Search (ELK)', 'Redis', 'Kafka',
 const MAX_POSTS = 10
 const allPosts = await getAllPosts()
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
+const workEntries = sortWorkByStartDate(await getAllWork())
 ---
 
 <PageLayout meta={{ title: 'Home' }}>
 	<div class='flex w-full flex-col gap-y-10'>
 		<section class='flex flex-col items-center gap-y-7'>
-			<Image
-				src={astro}
-				alt='profile photo'
-				class='h-28 w-auto rounded-full bg-[#FFBE98] p-2'
-				loading='eager'
-			/>
+			<ProfileAvatar />
 
 			<div class='flex flex-col items-center gap-y-4'>
 				<h1 class='text-3xl font-bold'>Animesh Singh</h1>
@@ -47,7 +43,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 
 				</a> -->
 				<div class='flex flex-wrap justify-center gap-x-7 gap-y-3'>
-					<Label title='Tata 1MG'>
+					<Label title='Tata 1mg'>
 						<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='h-5 w-5' slot='icon'
 							><path
 								fill='currentColor'
@@ -104,9 +100,9 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 
 		<Section title='About'>
 			<p class='text-muted-foreground'>
-                Hello! I'm Animesh, a <b>Full Stack Software Engineer</b> based in India.
-                I enjoy creating things that live on the internet, whether that be websites, applications, or anything in between.
-                Currently I'm building <b>Vanijya - AI Agent Workforce for SMEs and Social Commerce</b>.
+                Hey! I'm Animesh, a Software Engineer currently in Bali, Indonesia.
+
+
 			</p>
 		</Section>
 		{
@@ -124,68 +120,31 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 		}
 
 		<Section title='Experience'>
-			<Card
-				heading='Senior Software Engineer'
-				subheading='Tata 1MG'
-				date='April 2024 - Present'
-				imagePath='/src/assets/about-astro.png'
-				altText='Senior Software Engineer for Tata 1MG'
-				imageClass='h-12 w-auto md:-left-16'
-			>
-				<ul class='ml-4 list-disc text-muted-foreground'>
-                    <li>
-                        Working on B2B Order Management System for 1MG's Pharmacy and Diagnostics services.
-					</li>
-                    <li>
-                        Core Contributor on Common Order Taking (COT) Engine that creates a unified order taking system undetaking POS, Telesales, Third Party and All Other Order Channels.
-                    </li>
-                    <li>
-                    Build OneDoc - A Confluence Alternative with AI Capabilities for Storing Tech Documents, PRDs and Chatting with Internal Data.
-                    </li>
-				</ul>
-			</Card>
-			<Card
-				heading='Senior Software Engineer'
-				subheading='Meetri InfoTech'
-				date='Dec 2021 - April 2024'
-				imagePath='/src/assets/about-astro.png'
-				altText='Senior Software Engineer for Meetri'
-				imageClass='h-12 w-auto md:-left-16'
-			>
-				<ul class='ml-4 list-disc text-muted-foreground'>
-                    <li>
-                        Led Merchant Integration Team at Meetri, built scalable order management systems with AWS/Kafka (500k+ MAUs), developed Multi-Tenant services, and created an API Gateway with RBAC and advanced features.
-					</li>
-				</ul>
-			</Card>
-			<Card
-				heading='Software Consultant'
-				subheading='Ministry of Education (Contractor)'
-				date='Sep 2021 - Dec 2021'
-				imagePath='/src/assets/about-astro.png'
-				altText='Software Consultant for Ministry of Education'
-				imageClass='h-12 w-auto md:-left-16'
-			>
-            <ul class='ml-4 list-disc text-muted-foreground'>
-                <li>
-                    Designed and Launched a <b>Multi-Tenant monolithic Innovation Management Tool</b> to be used by 30+ educational institutions from
-                </li>
-            </ul>
-            </Card>
-			<Card
-				heading='Software Engineer'
-				subheading='Rishikul Herbal'
-				date='Jab 2021 - Oct 2021'
-				imagePath='/src/assets/about-astro.png'
-				altText='Software Consultant'
-				imageClass='h-12 w-auto md:-left-16'
-			>
-            <ul class='ml-4 list-disc text-muted-foreground'>
-                <li>
-                    Build the Entire Order Taking Website from scratch using React and NodeJS. Hosted on AWS Stack and Scaled to 10k Daily users.
-                </li>
-            </ul>
-            </Card>
+			{
+				workEntries.map((w) => (
+					<Card
+						heading={w.data.role}
+						subheading={w.data.company}
+						date={w.data.dateRange}
+						imageClass='h-12 w-auto md:-left-16'
+					>
+						<AnimatedWorkIcon slot='icon-slot' />
+						<ul class='ml-4 list-disc text-muted-foreground'>
+							{w.data.summaryBullets.map((line) => (
+								<li>{line}</li>
+							))}
+						</ul>
+						<p class='mt-3'>
+							<a
+								class='font-medium text-foreground underline-offset-4 hover:underline'
+								href={`/work/${w.slug}`}
+							>
+								Full write-up
+							</a>
+						</p>
+					</Card>
+				))
+			}
 		</Section>
 
 		<Section title='Education'>
@@ -193,10 +152,9 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 				heading='Bachelors in Software Engineering'
 				subheading='Guru Gobind Singh Indraprastha University'
 				date='2018 - 2021'
-				imagePath='/src/assets/about-astro.png'
-				altText='Bachelors in Software Engineering from Guru Gobind Singh Indraprastha University'
 				imageClass='h-12 w-auto md:-left-16'
 			>
+				<AnimatedEducationIcon slot='icon-slot' />
 				<ul class='ml-4 list-disc text-muted-foreground'>
 					<li>
 						GPA: 8.77

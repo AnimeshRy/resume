@@ -1,0 +1,183 @@
+---
+/**
+ * Hero avatar: defaults to illustration, swaps to a real photo on hover and on a timed cycle.
+ * Motion: 3D-ish rotate + scale “whoosh”; prefers-reduced-motion uses opacity only.
+ */
+import { Image } from 'astro:assets'
+import illustration from '../assets/astro.jpeg'
+import profilePhoto from '../assets/profile.jpeg'
+---
+
+<div
+	id='profile-avatar'
+	class='profile-avatar relative h-28 w-28 shrink-0 rounded-full bg-[#FFBE98] p-2'
+	data-state='default'
+	aria-label='Profile photo — hover to see photo'
+>
+	<div class='face-stack relative h-full w-full overflow-hidden rounded-full'>
+		<div class='layer layer--illustration'>
+			<Image
+				src={illustration}
+				alt='Animesh Singh — illustration'
+				class='h-full w-full object-cover'
+				loading='eager'
+			/>
+		</div>
+		<div class='layer layer--photo'>
+			<Image
+				src={profilePhoto}
+				alt='Animesh Singh — photo'
+				class='h-full w-full object-cover'
+				loading='eager'
+			/>
+		</div>
+	</div>
+</div>
+
+<style>
+	.face-stack {
+		perspective: 900px;
+		transform-style: preserve-3d;
+	}
+
+	.layer {
+		position: absolute;
+		inset: 0;
+		border-radius: 9999px;
+		overflow: hidden;
+		transition:
+			opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+			transform 0.55s cubic-bezier(0.34, 1.2, 0.64, 1);
+		backface-visibility: hidden;
+		will-change: transform, opacity;
+	}
+
+	/* Default: illustration in front */
+	.profile-avatar[data-state='default'] .layer--illustration {
+		opacity: 1;
+		transform: rotateY(0deg) rotateZ(0deg) scale(1);
+		z-index: 2;
+		pointer-events: auto;
+	}
+
+	.profile-avatar[data-state='default'] .layer--photo {
+		opacity: 0;
+		transform: rotateY(-78deg) rotateZ(-6deg) scale(0.88);
+		z-index: 1;
+		pointer-events: none;
+	}
+
+	/* Real photo */
+	.profile-avatar[data-state='real'] .layer--illustration {
+		opacity: 0;
+		transform: rotateY(78deg) rotateZ(6deg) scale(0.88);
+		z-index: 1;
+		pointer-events: none;
+	}
+
+	.profile-avatar[data-state='real'] .layer--photo {
+		opacity: 1;
+		transform: rotateY(0deg) rotateZ(0deg) scale(1);
+		z-index: 2;
+		pointer-events: auto;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.layer {
+			transition: opacity 0.35s ease;
+			transform: none !important;
+		}
+
+		.profile-avatar[data-state='default'] .layer--illustration {
+			opacity: 1;
+		}
+
+		.profile-avatar[data-state='default'] .layer--photo {
+			opacity: 0;
+		}
+
+		.profile-avatar[data-state='real'] .layer--illustration {
+			opacity: 0;
+		}
+
+		.profile-avatar[data-state='real'] .layer--photo {
+			opacity: 1;
+		}
+	}
+</style>
+
+<script>
+	/* Timings: tune FIRST_DELAY_MS / BETWEEN_CYCLES_MS as needed */
+	const FIRST_DELAY_MS = 5000
+	const BETWEEN_CYCLES_MS = 22000
+	const HOLD_REAL_MS = 3000
+	/** Match CSS transition (~550ms) so hold starts after motion settles */
+	const TRANSITION_MS = 600
+
+	const root = document.getElementById('profile-avatar') as HTMLDivElement | null
+	if (root) {
+		const el = root
+		let hovered = false
+		// Browser `setTimeout` returns a number (Node typings use Timeout — keep explicit).
+		let cycleTimer: number | null = null
+		let holdTimer: number | null = null
+
+		function clearTimers() {
+			if (cycleTimer !== null) {
+				clearTimeout(cycleTimer)
+				cycleTimer = null
+			}
+			if (holdTimer !== null) {
+				clearTimeout(holdTimer)
+				holdTimer = null
+			}
+		}
+
+		function setState(state: 'default' | 'real') {
+			el.dataset.state = state
+		}
+
+		function runAutoCycle() {
+			if (hovered || document.hidden) return
+			setState('real')
+			holdTimer = window.setTimeout(() => {
+				holdTimer = null
+				if (!hovered) setState('default')
+				cycleTimer = window.setTimeout(() => {
+					cycleTimer = null
+					runAutoCycle()
+				}, BETWEEN_CYCLES_MS)
+			}, HOLD_REAL_MS + TRANSITION_MS)
+		}
+
+		function scheduleFirstCycle() {
+			clearTimers()
+			cycleTimer = window.setTimeout(() => {
+				cycleTimer = null
+				runAutoCycle()
+			}, FIRST_DELAY_MS)
+		}
+
+		root.addEventListener('mouseenter', () => {
+			hovered = true
+			clearTimers()
+			setState('real')
+		})
+
+		root.addEventListener('mouseleave', () => {
+			hovered = false
+			setState('default')
+			scheduleFirstCycle()
+		})
+
+		document.addEventListener('visibilitychange', () => {
+			if (document.hidden) {
+				clearTimers()
+			} else if (!hovered) {
+				scheduleFirstCycle()
+			}
+		})
+
+		scheduleFirstCycle()
+	}
+</script>

@@ -14,6 +14,20 @@ interface Props {
 	}[]
 }
 const { class: className, title, tools, ...props } = Astro.props
+
+/**
+ * Pick icon color for contrast on colored tile backgrounds.
+ * Light hex backgrounds get dark icons; dark backgrounds get white icons.
+ */
+function iconTextClass(hex: string): string {
+	const raw = hex.replace('#', '')
+	if (raw.length !== 6) return 'text-white'
+	const r = parseInt(raw.slice(0, 2), 16)
+	const g = parseInt(raw.slice(2, 4), 16)
+	const b = parseInt(raw.slice(4, 6), 16)
+	const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+	return luminance > 0.55 ? 'text-foreground' : 'text-white'
+}
 ---
 
 <div
@@ -32,10 +46,19 @@ const { class: className, title, tools, ...props } = Astro.props
 					href={tool.href}
 					id={tool.name}
 					target='_blank'
+					rel='noopener noreferrer'
 				>
 					<div class='relative flex flex-row items-center gap-x-4 px-2 py-0.5 transition-all'>
 						<div class='absolute -inset-0 z-10 rounded-lg border border-border bg-muted opacity-0 transition-all group-hover:opacity-50' />
-						<Icon name={tool.iconPath} class='z-20 h-10 w-10 rounded-lg bg-muted p-2' />
+						<div
+							class='z-20 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg p-1.5'
+							style={{ backgroundColor: tool.iconBgColour }}
+						>
+							<Icon
+								name={tool.iconPath}
+								class={cn('h-6 w-6', iconTextClass(tool.iconBgColour))}
+							/>
+						</div>
 						<div class='z-20 flex flex-col'>
 							<h3 class='font-medium'>{tool.name}</h3>
 							<p class='text-muted-foreground'>{tool.description}</p>

@@ -3,16 +3,7 @@ import PageLayout from '@/layouts/BaseLayout.astro'
 import ToolSection from '@/components/ToolSection.astro'
 import Button from '@/components/Button.astro'
 
-// const DESIGN = [
-// 	{
-// 		name: 'Figma',
-// 		description: 'Design Tool',
-// 		href: 'https://www.figma.com/',
-// 		iconPath: 'figma',
-// 		iconBgColour: '#000001'
-// 	}
-// ]
-
+/** Daily apps — icons in /src/icons (short names). */
 const PRODUCTIVITY = [
 	{
 		name: 'Arc',
@@ -46,6 +37,28 @@ const DEVELOPMENT = [
 		iconBgColour: '#2C2C32'
 	},
 	{
+		name: 'Cursor',
+		description: 'AI IDE',
+		href: 'https://cursor.com/',
+		iconPath: 'simple-icons:cursor',
+		iconBgColour: '#14120B'
+	},
+	{
+		name: 'Antigravity',
+		description: 'AI IDE',
+		href: 'https://antigravity.google/',
+		// Local SVG — Simple Icons has no Antigravity glyph yet.
+		iconPath: 'antigravity',
+		iconBgColour: '#111827'
+	},
+	{
+		name: 'Claude Code',
+		description: 'AI coding agent',
+		href: 'https://www.anthropic.com/claude-code',
+		iconPath: 'simple-icons:anthropic',
+		iconBgColour: '#CC785C'
+	},
+	{
 		name: 'ChatGPT',
 		description: 'AI',
 		href: 'https://chat.openai.com/',
@@ -53,9 +66,194 @@ const DEVELOPMENT = [
 		iconBgColour: '#06A67F'
 	}
 ]
+
+/** Tech stack — `simple-icons:slug` via astro-icon + @iconify-json/simple-icons */
+const LANGUAGES = [
+	{
+		name: 'TypeScript',
+		description: 'Language',
+		href: 'https://www.typescriptlang.org/',
+		iconPath: 'simple-icons:typescript',
+		iconBgColour: '#3178C6'
+	},
+	{
+		name: 'Python',
+		description: 'Language',
+		href: 'https://www.python.org/',
+		iconPath: 'simple-icons:python',
+		iconBgColour: '#3776AB'
+	},
+	{
+		name: 'Go',
+		description: 'Language',
+		href: 'https://go.dev/',
+		iconPath: 'simple-icons:go',
+		iconBgColour: '#00ADD8'
+	}
+]
+
+const FRONTEND = [
+	{
+		name: 'React',
+		description: 'UI library',
+		href: 'https://react.dev/',
+		iconPath: 'simple-icons:react',
+		iconBgColour: '#20232A'
+	},
+	{
+		name: 'Next.js',
+		description: 'React framework',
+		href: 'https://nextjs.org/',
+		iconPath: 'simple-icons:nextdotjs',
+		iconBgColour: '#000000'
+	}
+]
+
+const BACKEND = [
+	{
+		name: 'FastAPI',
+		description: 'Python API framework',
+		href: 'https://fastapi.tiangolo.com/',
+		iconPath: 'simple-icons:fastapi',
+		iconBgColour: '#009688'
+	},
+	{
+		name: 'NestJS',
+		description: 'Node.js framework',
+		href: 'https://nestjs.com/',
+		iconPath: 'simple-icons:nestjs',
+		iconBgColour: '#E0234E'
+	},
+	{
+		name: 'Django',
+		description: 'Python web framework',
+		href: 'https://www.djangoproject.com/',
+		iconPath: 'simple-icons:django',
+		iconBgColour: '#092E20'
+	},
+	{
+		name: 'LangChain',
+		description: 'LLM orchestration',
+		href: 'https://www.langchain.com/',
+		iconPath: 'simple-icons:langchain',
+		iconBgColour: '#1C3C3C'
+	},
+	{
+		name: 'LangGraph',
+		description: 'Agent workflows',
+		href: 'https://langchain-ai.github.io/langgraph/',
+		iconPath: 'simple-icons:langgraph',
+		iconBgColour: '#1a1a2e'
+	}
+]
+
+const CLOUD_DEVOPS = [
+	{
+		name: 'AWS',
+		description: 'Cloud',
+		href: 'https://aws.amazon.com/',
+		iconPath: 'simple-icons:amazonaws',
+		iconBgColour: '#232F3E'
+	},
+	{
+		name: 'Kubernetes',
+		description: 'Orchestration',
+		href: 'https://kubernetes.io/',
+		iconPath: 'simple-icons:kubernetes',
+		iconBgColour: '#326CE5'
+	},
+	{
+		name: 'Docker',
+		description: 'Containers',
+		href: 'https://www.docker.com/',
+		iconPath: 'simple-icons:docker',
+		iconBgColour: '#2496ED'
+	},
+	{
+		name: 'Terraform',
+		description: 'IaC',
+		href: 'https://www.terraform.io/',
+		iconPath: 'simple-icons:terraform',
+		iconBgColour: '#7B42BC'
+	},
+	{
+		name: 'Kafka',
+		description: 'Event streaming',
+		href: 'https://kafka.apache.org/',
+		iconPath: 'simple-icons:apachekafka',
+		iconBgColour: '#231F20'
+	},
+	{
+		name: 'GitHub Actions',
+		description: 'CI/CD',
+		href: 'https://github.com/features/actions',
+		iconPath: 'simple-icons:githubactions',
+		iconBgColour: '#2088FF'
+	},
+	{
+		name: 'Grafana',
+		description: 'Dashboards',
+		href: 'https://grafana.com/',
+		iconPath: 'simple-icons:grafana',
+		iconBgColour: '#F46800'
+	},
+	{
+		name: 'Prometheus',
+		description: 'Metrics',
+		href: 'https://prometheus.io/',
+		iconPath: 'simple-icons:prometheus',
+		iconBgColour: '#E6522C'
+	},
+	{
+		name: 'Datadog',
+		description: 'Observability',
+		href: 'https://www.datadoghq.com/',
+		iconPath: 'simple-icons:datadog',
+		iconBgColour: '#632CA6'
+	}
+]
+
+const DATABASES = [
+	{
+		name: 'PostgreSQL',
+		description: 'Relational DB',
+		href: 'https://www.postgresql.org/',
+		iconPath: 'simple-icons:postgresql',
+		iconBgColour: '#4169E1'
+	},
+	{
+		name: 'Redis',
+		description: 'In-memory store',
+		href: 'https://redis.io/',
+		iconPath: 'simple-icons:redis',
+		iconBgColour: '#DC382D'
+	},
+	{
+		name: 'MongoDB',
+		description: 'Document DB',
+		href: 'https://www.mongodb.com/',
+		iconPath: 'simple-icons:mongodb',
+		iconBgColour: '#47A248'
+	},
+	{
+		name: 'DynamoDB',
+		description: 'NoSQL (AWS)',
+		href: 'https://aws.amazon.com/dynamodb/',
+		iconPath: 'simple-icons:amazondynamodb',
+		iconBgColour: '#4053D6'
+	},
+	{
+		name: 'Weaviate',
+		description: 'Vector DB',
+		href: 'https://weaviate.io/',
+		// Local SVG — Simple Icons has no Weaviate glyph in this collection version.
+		iconPath: 'weaviate',
+		iconBgColour: '#000000'
+	}
+]
 ---
 
-<PageLayout meta={{ title: 'Home' }}>
+<PageLayout meta={{ title: 'Tools' }}>
 	<div class='w-full'>
 		<Button title='Back' href='/' style='button'>
 			<svg
@@ -76,10 +274,14 @@ const DEVELOPMENT = [
 		<div class='mt-5 flex w-full flex-col gap-y-10'>
 			<div>
 				<h1 class='mb-1 text-2xl font-bold'>Tools</h1>
-				<p>Tools and software I use daily</p>
+				<p>Tech stack, platforms, and software I use day to day.</p>
 			</div>
 
-			<!-- <ToolSection title='Design' tools={DESIGN} /> -->
+			<ToolSection title='Languages' tools={LANGUAGES} />
+			<ToolSection title='Frontend' tools={FRONTEND} />
+			<ToolSection title='Backend &amp; AI' tools={BACKEND} />
+			<ToolSection title='Cloud &amp; DevOps' tools={CLOUD_DEVOPS} />
+			<ToolSection title='Databases' tools={DATABASES} />
 			<ToolSection title='Productivity' tools={PRODUCTIVITY} />
 			<ToolSection title='Development' tools={DEVELOPMENT} />
 		</div>

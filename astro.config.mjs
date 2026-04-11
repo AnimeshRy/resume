@@ -11,6 +11,35 @@ import icon from 'astro-icon'
 
 import vercel from '@astrojs/vercel/serverless'
 
+// Only bundle Simple Icons used on /tools (see src/pages/tools/index.astro).
+const simpleIconsInclude = [
+	'typescript',
+	'python',
+	'go',
+	'react',
+	'nextdotjs',
+	'fastapi',
+	'nestjs',
+	'django',
+	'langchain',
+	'langgraph',
+	'amazonaws',
+	'kubernetes',
+	'docker',
+	'terraform',
+	'apachekafka',
+	'githubactions',
+	'grafana',
+	'prometheus',
+	'datadog',
+	'postgresql',
+	'redis',
+	'mongodb',
+	'amazondynamodb',
+	'cursor',
+	'anthropic'
+]
+
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://example.me',
@@ -21,7 +50,11 @@ export default defineConfig({
 		}),
 		sitemap(),
 		mdx(),
-		icon()
+		icon({
+			include: {
+				'simple-icons': simpleIconsInclude
+			}
+		})
 	],
 	markdown: {
 		remarkPlugins: [remarkUnwrapImages, remarkReadingTime],
