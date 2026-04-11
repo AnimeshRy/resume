@@ -4,15 +4,20 @@ company: Tata 1mg
 dateRange: May 2025 - Present
 startDate: 2025-05-01
 summaryBullets:
-  - Lead engineer for B2B Order Management (Pharmacy & Diagnostics); 500k+ MAUs, team of 5.
-  - Shipped Voice AI telesales to production; MCP server (FastMCP); security scanning across 380+ repos.
-  - Owner for Collection Center and My Vaccines platform initiatives.
-description: B2B order management, Voice AI, MCP, security automation, and service platforms at scale.
+  - Lead engineer for B2B Order Management (Pharmacy & Diagnostics); 500k+ MAUs; team of 5.
+  - Shipped Voice AI telesales to production; MCP (FastMCP); org-wide security scanning (380+ repos).
+  - Technical owner for Collection Center and My Vaccines — platform-scale initiatives.
+description: Lead B2B order flows, Voice AI, MCP, security automation, and service platforms at Tata 1mg.
 ---
 
 ## Role
 
 Lead engineer for **B2B Order Management** covering Pharmacy and Diagnostics, serving **500k+ monthly active users** with a team of **5 engineers**.
+
+## Technical decisions (one-way doors)
+
+- **My Vaccines**: Introduced a **service-led category** decoupled from pathology-based flows — costly to unwind once live; bought a long-term extension point for non-pathology services.
+- **MCP server**: Standardized on **FastMCP** as the contract surface for AI agents calling production — a deliberate integration boundary rather than ad-hoc endpoints.
 
 ## Voice AI telesales
 

@@ -7,7 +7,8 @@ export const siteConfig: SiteConfig = {
 	// Meta property used to construct the meta title property, found in src/components/BaseHead.astro L:11
 	title: 'Animesh Singh Resume',
 	// Meta property used as the default description meta property
-	description: 'Portfolio for Animesh Singh',
+	description:
+		'Animesh Singh — software engineer focused on AI systems and cloud. Portfolio, work history, and writing.',
 	// HTML lang property, found in src/layouts/Base.astro L:18
 	lang: 'en-GB',
 	// Meta property, found in src/components/BaseHead.astro L:42

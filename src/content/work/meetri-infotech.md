@@ -4,15 +4,20 @@ company: MeeTri Infotech
 dateRange: Jan 2022 - Apr 2025
 startDate: 2022-01-01
 summaryBullets:
-  - Banking integrations (SBI, TCS, ICICI) for pharmacy flows; high-throughput Kafka order pipeline.
-  - Multi-tenant identity, Cerberus API gateway, and OSO-based authorization in Golang.
-  - Terraform and observability (CloudWatch, Grafana) across environments.
-description: B2B payments, agritech platforms, API gateway, and cloud operations.
+  - Banking integrations (SBI, TCS, ICICI) for pharmacy; Kafka-backed order pipeline at scale.
+  - Cerberus API gateway; multi-tenant identity and OSO-based auth in Golang.
+  - Terraform, CloudWatch, and Grafana — repeatable environments and a single ops view.
+description: B2B payments, agritech platforms, API gateway, and cloud operations at MeeTri Infotech.
 ---
 
 ## Banking and order integrations
 
 Led order integrations with **SBI**, **TCS**, and **ICICI** for pharmacy order flows generating roughly **Rs 3 Cr/month** in revenue, coordinating across banking partners and internal payment infrastructure.
+
+## Technical decisions (one-way doors)
+
+- **SQS → Kafka** for the B2B order aggregator — committed to streaming for throughput and replay; reversing would have meant re-proving latency and ordering guarantees.
+- **Cerberus** as the **vendor-facing gateway** — centralized RBAC, rate limits, and observability for third parties instead of scattering policy across services.
 
 ## Authorization and platform
 

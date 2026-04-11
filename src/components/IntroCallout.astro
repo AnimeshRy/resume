@@ -1,0 +1,252 @@
+---
+/**
+ * About area: teaser + L→R scribble arrow (left) → video thumbnail (right).
+ * ?intro=1 opens modal on load.
+ */
+const YOUTUBE_WATCH = 'https://www.youtube.com/watch?v=pV_z-IO4gUY'
+const VIDEO_ID = 'pV_z-IO4gUY'
+const THUMB_URL = `https://i.ytimg.com/vi/${VIDEO_ID}/hqdefault.jpg`
+---
+
+<div class='mt-2 border-t border-border/60 pt-6'>
+	<div class='flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-6 md:gap-8'>
+		<!-- Left: copy + arrow pointing right -->
+		<div class='flex min-w-0 flex-1 flex-col gap-3'>
+			<p
+				class='font-serif text-sm italic leading-snug text-muted-foreground'
+				id='intro-video-teaser'
+			>
+				Bored of reading? Here&apos;s a 50-second video about me.
+			</p>
+			<div class='pointer-events-none flex min-h-[4.5rem] w-full items-center' aria-hidden='true'>
+				<svg
+					class='h-16 w-full max-w-md text-primary/85 dark:text-primary/90'
+					viewBox='0 0 280 72'
+					fill='none'
+					xmlns='http://www.w3.org/2000/svg'
+					preserveAspectRatio='xMinYMid meet'
+				>
+					<!-- Main stroke: sweeps left → right toward the video column -->
+					<path
+						d='M 14 40 C 72 22, 120 58, 168 44 C 196 36, 218 38, 232 42'
+						stroke='currentColor'
+						stroke-width='2.15'
+						stroke-linecap='round'
+						stroke-linejoin='round'
+					></path>
+					<path
+						d='M 16 43 C 74 26, 122 60, 170 46 C 198 38, 220 40, 234 44'
+						stroke='currentColor'
+						stroke-width='1'
+						stroke-linecap='round'
+						stroke-opacity='0.35'
+					></path>
+					<!-- Scribble circle near the tip (before arrowhead) -->
+					<path
+						d='M 210 36 C 218 32, 228 36, 230 44 C 232 52, 218 58, 210 54 C 202 50, 204 40, 212 38'
+						stroke='currentColor'
+						stroke-width='1.65'
+						stroke-linecap='round'
+						stroke-linejoin='round'
+					></path>
+					<!-- Arrowhead pointing right -->
+					<path
+						d='M 248 38 L 262 42 L 248 48'
+						stroke='currentColor'
+						stroke-width='2'
+						stroke-linecap='round'
+						stroke-linejoin='round'
+					></path>
+				</svg>
+			</div>
+		</div>
+
+		<!-- Right: video -->
+		<div class='flex w-full shrink-0 flex-col gap-2 sm:w-[min(100%,260px)]'>
+			<button
+				type='button'
+				class='intro-modal-open group relative w-full overflow-hidden rounded-xl border border-border text-left transition-all hover:border-foreground/25 hover:shadow-sm'
+				aria-haspopup='dialog'
+				aria-controls='intro-video-dialog'
+				aria-describedby='intro-video-teaser'
+				aria-label='Play 50-second intro video'
+			>
+				<img
+					src={THUMB_URL}
+					alt=''
+					width={480}
+					height={360}
+					class='aspect-video w-full object-cover transition-transform group-hover:scale-[1.02]'
+					loading='lazy'
+					decoding='async'
+				/>
+				<span
+					class='pointer-events-none absolute inset-0 flex items-center justify-center bg-background/20 transition-colors group-hover:bg-background/10'
+					aria-hidden='true'
+				>
+					<span
+						class='flex h-12 w-12 items-center justify-center rounded-full bg-background/90 text-foreground shadow-md ring-1 ring-border'
+					>
+						<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='h-6 w-6' fill='currentColor' aria-hidden='true'>
+							<path d='M8 5v14l11-7z'></path>
+						</svg>
+					</span>
+				</span>
+				<span
+					class='absolute bottom-2 right-2 rounded-md bg-background/90 px-2 py-0.5 text-xs font-medium text-foreground shadow-sm'
+				>
+					~50s
+				</span>
+			</button>
+			<a
+				href={YOUTUBE_WATCH}
+				target='_blank'
+				rel='noopener noreferrer'
+				class='text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline'
+			>
+				Open on YouTube
+			</a>
+		</div>
+	</div>
+</div>
+
+<dialog
+	id='intro-video-dialog'
+	data-video-id={VIDEO_ID}
+	class='intro-video-dialog overflow-hidden rounded-xl border border-border bg-background p-0 text-foreground shadow-lg backdrop:bg-black/60'
+	aria-labelledby='intro-video-dialog-title'
+>
+	<div class='flex shrink-0 items-center justify-between gap-3 border-b border-border px-4 py-3'>
+		<h2 id='intro-video-dialog-title' class='text-sm font-semibold'>Intro — about 50 seconds</h2>
+		<button
+			type='button'
+			class='intro-modal-close rounded-md border border-transparent p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground'
+			aria-label='Close video'
+		>
+			<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'>
+				<path stroke-linecap='round' stroke-linejoin='round' d='M6 18L18 6M6 6l12 12'></path>
+			</svg>
+		</button>
+	</div>
+	<div class='intro-video-dialog__frame relative w-full bg-black'>
+		<iframe
+			id='intro-video-iframe'
+			class='absolute inset-0 h-full w-full'
+			title='YouTube intro video'
+			allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+			allowfullscreen
+			referrerpolicy='strict-origin-when-cross-origin'
+		></iframe>
+	</div>
+</dialog>
+
+<script>
+	;(function () {
+		const PARAM = 'intro'
+		const dialogEl = document.getElementById('intro-video-dialog')
+		const iframeEl = document.getElementById('intro-video-iframe')
+		if (!(dialogEl instanceof HTMLDialogElement) || !(iframeEl instanceof HTMLIFrameElement)) return
+
+		const modal: HTMLDialogElement = dialogEl
+		const player: HTMLIFrameElement = iframeEl
+
+		const videoId = modal.dataset.videoId
+		if (!videoId) return
+
+		function embedSrc() {
+			return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`
+		}
+
+		function stripIntroParam() {
+			const u = new URL(window.location.href)
+			if (!u.searchParams.has(PARAM)) return
+			u.searchParams.delete(PARAM)
+			const next = u.pathname + u.search + u.hash
+			window.history.replaceState({}, '', next || u.pathname)
+		}
+
+		function setIntroParam() {
+			const u = new URL(window.location.href)
+			if (u.searchParams.get(PARAM) === '1') return
+			u.searchParams.set(PARAM, '1')
+			window.history.pushState({ introModal: true }, '', u.toString())
+		}
+
+		function openModal(fromDeepLink: boolean) {
+			player.src = embedSrc()
+			modal.showModal()
+			document.body.style.overflow = 'hidden'
+			if (!fromDeepLink) setIntroParam()
+		}
+
+		function closeModal() {
+			modal.close()
+		}
+
+		function shouldOpenFromQuery() {
+			return new URLSearchParams(window.location.search).get(PARAM) === '1'
+		}
+
+		modal.addEventListener('close', () => {
+			player.removeAttribute('src')
+			document.body.style.overflow = ''
+			stripIntroParam()
+		})
+
+		document.querySelectorAll('.intro-modal-open').forEach((el) => {
+			el.addEventListener('click', () => openModal(false))
+		})
+
+		document.querySelectorAll('.intro-modal-close').forEach((el) => {
+			el.addEventListener('click', () => closeModal())
+		})
+
+		modal.addEventListener('click', (e) => {
+			if (e.target === modal) closeModal()
+		})
+
+		window.addEventListener('popstate', () => {
+			if (!shouldOpenFromQuery() && modal.open) closeModal()
+		})
+
+		if (shouldOpenFromQuery()) {
+			requestAnimationFrame(() => openModal(true))
+		}
+	})()
+</script>
+
+<style is:global>
+	/*
+	 * Native <dialog> defaults to shrink-to-fit; force a wide 16:9 stage so the iframe
+	 * is not a narrow strip. Width caps at ~896px; height follows aspect + viewport.
+	 */
+	.intro-video-dialog {
+		box-sizing: border-box;
+		margin: auto;
+		/* Override UA shrink-to-fit so the modal is actually wide */
+		width: min(96vw, 56rem);
+		max-width: 96vw;
+		max-height: 92vh;
+		display: none;
+		flex-direction: column;
+		padding: 0;
+	}
+
+	.intro-video-dialog[open] {
+		display: flex;
+	}
+
+	.intro-video-dialog::backdrop {
+		background: rgb(0 0 0 / 0.55);
+	}
+
+	/* 16:9 box: padding-bottom trick so height scales with modal width */
+	.intro-video-dialog__frame {
+		position: relative;
+		width: 100%;
+		height: 0;
+		padding-bottom: 56.25%;
+		overflow: hidden;
+	}
+
+</style>

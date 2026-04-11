@@ -9,10 +9,11 @@ import Label from '../components/Label.astro'
 import SkillLayout from '../components/SkillLayout.astro'
 import PostPreview from '@/components/blog/PostPreview.astro'
 import ProfileAvatar from '../components/ProfileAvatar.astro'
+import IntroCallout from '../components/IntroCallout.astro'
 
 import { getAllPosts, getAllWork, sortMDByDate, sortWorkByStartDate } from '@/utils'
 
-const frontend = ['React',  'NextJS', 'Javascript', 'TypeScript', 'HTML SCSS']
+const frontend = ['React', 'NextJS', 'Javascript', 'TypeScript', 'HTML SCSS']
 const backend = ['NodeJS', 'MERN', 'FastAPI', 'Sanic', 'Django', 'NestJS', 'Python', 'Golang', 'LangChain', 'LangGraph', 'REST', 'GraphQL']
 const others = ['AWS', 'Github CI/CD', 'Elastic Search (ELK)', 'Redis', 'Kafka', 'OIDC', 'KeyCloak', 'PostgreSQL', 'MongoDB',
 'DynamoDB', 'Git', 'SQS', 'Kubernetes', 'Docker', 'ECS']
@@ -28,21 +29,12 @@ const workEntries = sortWorkByStartDate(await getAllWork())
 		<section class='flex flex-col items-center gap-y-7'>
 			<ProfileAvatar />
 
-			<div class='flex flex-col items-center gap-y-4'>
+			<div class='flex max-w-lg flex-col items-center gap-y-3 text-center'>
 				<h1 class='text-3xl font-bold'>Animesh Singh</h1>
-				<!-- <a
-					href='https://github.com/srleom/astro-theme-resume.git'
-					class='flex flex-row items-center gap-x-3 rounded-3xl border border-input px-4 py-2 text-sm shadow-sm transition-all hover:shadow-md'
-				>
-					<span class='relative flex items-center justify-center'>
-						<span
-							class='absolute inline-flex h-2 w-2 animate-ping rounded-full border border-green-400 bg-green-400 opacity-75'
-						></span>
-						<span class='relative inline-flex h-2 w-2 rounded-full bg-green-400'></span>
-					</span>
-
-				</a> -->
-				<div class='flex flex-wrap justify-center gap-x-7 gap-y-3'>
+				<p class='text-base font-medium text-foreground'>
+					Building distributed systems &amp; AI infrastructure
+				</p>
+				<div class='flex flex-wrap justify-center gap-x-7 gap-y-3 pt-1'>
 					<Label title='Tata 1mg'>
 						<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='h-5 w-5' slot='icon'
 							><path
@@ -51,7 +43,7 @@ const workEntries = sortWorkByStartDate(await getAllWork())
 							></path></svg
 						>
 					</Label>
-					<Label title='India'>
+					<Label title='Bangalore'>
 						<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='h-5 w-5' slot='icon'
 							><path
 								fill='currentColor'
@@ -99,11 +91,53 @@ const workEntries = sortWorkByStartDate(await getAllWork())
 		</section>
 
 		<Section title='About'>
-			<p class='text-muted-foreground'>
-                Hey! I'm Animesh, a Software Engineer currently in Bali, Indonesia.
-
-
-			</p>
+			<div class='flex flex-col gap-y-5'>
+				<div class='flex flex-col gap-y-4 text-muted-foreground'>
+					<p>
+						<strong class='font-medium text-foreground'>Hi, I&apos;m Animesh.</strong> I&apos;m a software
+						engineer based in <strong class='font-medium text-foreground'>Bangalore</strong>. I specialize in
+						<strong class='font-medium text-foreground'>distributed systems</strong> and
+						<strong class='font-medium text-foreground'>AI infrastructure</strong> — the kind of backends that
+						need to stay correct, observable, and evolvable as load and teams grow.
+					</p>
+					<p>
+						I care about shipping, tight feedback loops, and clear trade-offs when the decision is hard to
+						undo. Outside of client work, I&apos;m
+						<strong class='font-medium text-foreground'> currently building CurbRx</strong> a product around weight
+						management with GLP-1 medications — product thinking, execution, and full-stack depth where the
+						problem needs it.
+					</p>
+				</div>
+				<div
+					class='inline-flex w-fit max-w-full items-center gap-2.5 rounded-full border border-border bg-muted/40 px-3 py-1.5 text-sm text-foreground'
+					role='status'
+					aria-label='Actively looking for new opportunities'
+				>
+					<svg
+						xmlns='http://www.w3.org/2000/svg'
+						fill='none'
+						viewBox='0 0 24 24'
+						stroke-width='1.5'
+						stroke='currentColor'
+						class='h-4 w-4 shrink-0 text-foreground/80'
+						aria-hidden='true'
+					>
+						<path
+							stroke-linecap='round'
+							stroke-linejoin='round'
+							d='M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+						></path>
+					</svg>
+					<span class='relative flex h-2 w-2 shrink-0 items-center justify-center'>
+						<span
+							class='absolute inline-flex h-2 w-2 animate-ping rounded-full bg-emerald-500/70 opacity-75 motion-reduce:hidden'
+						></span>
+						<span class='relative inline-flex h-2 w-2 rounded-full bg-emerald-500'></span>
+					</span>
+					<span class='font-medium'>Open to opportunities</span>
+				</div>
+				<IntroCallout />
+			</div>
 		</Section>
 		{
 			allPostsByDate.length > 0 && (
@@ -239,9 +273,14 @@ const workEntries = sortWorkByStartDate(await getAllWork())
 		</Section>
 
 		<Section title='Skills'>
-			<SkillLayout title='Frontend' skills={frontend} />
-			<SkillLayout title='Backend' skills={backend} />
-			<SkillLayout title='Others' skills={others} />
+			<p class='mb-5 text-muted-foreground'>
+				<strong class='font-medium text-foreground'>Compounding depth</strong> on backend, AI/ML tooling, and
+				cloud — not a flat list of every tool I have ever touched. Frontend and mobile show up when shipping
+				the product demands it.
+			</p>
+			<SkillLayout title='Backend &amp; AI' skills={backend} />
+			<SkillLayout title='Frontend &amp; product' skills={frontend} />
+			<SkillLayout title='Cloud &amp; platform' skills={others} />
 		</Section>
 	</div>
 </PageLayout>
