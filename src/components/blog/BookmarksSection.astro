@@ -1,0 +1,123 @@
+---
+import type { BookmarkItem } from '@/data/bookmarks'
+
+/** How many bookmark lines to show before switching page controls */
+export const BOOKMARKS_PAGE_SIZE = 15
+
+interface Props {
+	items: BookmarkItem[]
+}
+
+const { items } = Astro.props
+const pageSize = BOOKMARKS_PAGE_SIZE
+const totalPages = Math.max(1, Math.ceil(items.length / pageSize))
+---
+
+<section
+	class='mt-16 border-t border-border pt-10 sm:mt-20 sm:pt-12'
+	aria-labelledby='bookmarks-heading'
+	data-bookmarks-root
+>
+	<h2 id='bookmarks-heading' class='text-xl font-semibold tracking-tight'>Bookmarks</h2>
+	<p class='mt-1 text-[0.92rem] text-foreground/70'>
+		Articles and links worth returning to — one line each.
+	</p>
+
+	{
+		items.length === 0 ? (
+			<p class='mt-6 text-foreground/60'>No bookmarks yet. Add entries in `src/data/bookmarks.ts`.</p>
+		) : (
+			<>
+				<ul class='mt-6 w-full list-none' role='list'>
+					{items.map((item, index) => {
+						const pageNum = Math.floor(index / pageSize) + 1
+						const isFirstPage = pageNum === 1
+						return (
+							<li
+								class:list={[
+									'bookmark-row border-b border-border py-3 text-[0.92rem] leading-relaxed',
+									!isFirstPage && 'hidden'
+								]}
+								data-bookmark-page={pageNum}
+							>
+								{item.href ? (
+									<a
+										href={item.href}
+										class='text-foreground transition-colors hover:underline hover:decoration-foreground/80 hover:underline-offset-[3px]'
+										target={item.href.startsWith('http') ? '_blank' : undefined}
+										rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+									>
+										{item.text}
+									</a>
+								) : (
+									<span class='text-foreground'>{item.text}</span>
+								)}
+							</li>
+						)
+					})}
+				</ul>
+
+				{totalPages > 1 && (
+					<nav class='mt-6' aria-label='Bookmarks pages'>
+						<ol class='flex flex-wrap items-center gap-x-1 gap-y-2 text-sm'>
+							{Array.from({ length: totalPages }, (_, i) => {
+								const n = i + 1
+								const isFirst = n === 1
+								return (
+									<li>
+										<button
+											type='button'
+											class:list={[
+												'min-h-[2.25rem] min-w-[2.25rem] rounded-md px-2 py-1 text-foreground transition-colors hover:bg-foreground/5',
+												isFirst && 'font-semibold underline decoration-foreground underline-offset-4'
+											]}
+											data-bookmark-nav={n}
+											aria-current={isFirst ? 'page' : undefined}
+										>
+											{n}
+										</button>
+									</li>
+								)
+							})}
+						</ol>
+					</nav>
+				)}
+			</>
+		)
+	}
+</section>
+
+<script>
+	;(function () {
+		const roots = document.querySelectorAll('[data-bookmarks-root]')
+		roots.forEach((root) => {
+			const rows = root.querySelectorAll('[data-bookmark-page]')
+			const buttons = root.querySelectorAll('[data-bookmark-nav]')
+			if (!rows.length || !buttons.length) return
+
+			function showPage(page: number) {
+				rows.forEach((row) => {
+					const rowPage = Number(row.getAttribute('data-bookmark-page'))
+					row.classList.toggle('hidden', rowPage !== page)
+				})
+				buttons.forEach((btn) => {
+					const btnPage = Number(btn.getAttribute('data-bookmark-nav'))
+					const active = btnPage === page
+					btn.setAttribute('aria-current', active ? 'page' : 'false')
+					btn.classList.toggle('font-semibold', active)
+					btn.classList.toggle('underline', active)
+					btn.classList.toggle('decoration-foreground', active)
+					btn.classList.toggle('underline-offset-4', active)
+				})
+			}
+
+			buttons.forEach((btn) => {
+				btn.addEventListener('click', () => {
+					const page = Number(btn.getAttribute('data-bookmark-nav'))
+					if (!Number.isFinite(page)) return
+					showPage(page)
+				})
+			})
+		})
+	})()
+</script>

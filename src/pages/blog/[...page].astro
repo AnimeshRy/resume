@@ -7,7 +7,9 @@ import type { CollectionEntry } from 'astro:content'
 import Button from '@/components/Button.astro'
 import Pagination from '@/components/Paginator.astro'
 import PostPreview from '@/components/blog/PostPreview.astro'
+import BookmarksSection from '@/components/blog/BookmarksSection.astro'
 import PageLayout from '@/layouts/BaseLayout.astro'
+import { BOOKMARKS } from '@/data/bookmarks'
 import { getAllPosts, getUniqueTags, sortMDByDate } from '@/utils'
 
 export const getStaticPaths = (async ({ paginate }) => {
@@ -116,5 +118,6 @@ const paginationProps = {
 			)
 		}
 
+		<BookmarksSection items={BOOKMARKS} />
 	</div>
 </PageLayout>
